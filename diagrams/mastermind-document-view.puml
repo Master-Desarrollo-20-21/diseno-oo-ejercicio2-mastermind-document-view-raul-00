@@ -1,0 +1,169 @@
+@startuml
+
+title Mastermind - DocumentView
+
+class Mastermind {
+    + play() : void
+    + {static} main() : void
+}
+    
+Mastermind *--> mastermind.models.Game
+Mastermind *--> mastermind.views.View
+
+namespace mastermind.models{
+
+    Game o-->"0..10" Attempt 
+    Game *--> SecretCombination
+    
+    Attempt *--> ProposedCombination
+    Attempt ..> SecretCombination
+    Attempt ..> Combination
+    
+    Combination *-->"4" Color
+    Combination <|--  ProposedCombination
+    Combination <|--  SecretCombination
+
+    class Game{
+        -{static}MAX_ATTEMPTS: int
+        -isLooser(): boolean
+        +reset() : void
+        +isFinished(): boolean
+        +isWinner(): boolean
+        +getAttempts(): Attempt[]
+        +getSecretCombination(): SecretCombination
+        +addAttempt(): void 
+    }
+    
+    class Attempt{
+        +Attempt(SecretCombination, ProposedCombination)
+        +getBlacks(): String
+        +getWhites(): boolean
+        +getProposedCombination(): ProposedCombination
+    }
+    
+    class Combination{
+        -{static}SIZE: int
+        # contains(Color): boolean
+        +size(): int
+        +getColors(): String
+    }
+    
+    class ProposedCombination{
+        +ProposedCombination(Color[])
+        +contains(Color,int position)
+    }
+    
+    class SecretCombination{
+        - generateRandom(): void
+        + getBlacks(ProposedCombination): int
+        + getWhites(ProposedCombination): int
+    }
+    
+    enum Color{
+        +RED 
+        +BLUE
+        +YELLOW
+        +ORANGE
+        +PINK
+        +GREEN
+        +NULL
+    }
+}
+
+namespace mastermind.views{
+
+    View *--> ResumeViewmode
+    View *--> GameView 
+    GameView --> SecretCombinationView
+    GameView --> ProposedCombinationView
+    GameView -->  AttemptView
+    GameView ..> mastermind.utils.Console
+    GameView ..> Message
+    ResumeView ..> mastermind.utils.YesNoDialog
+    ResumeView ..> Message
+    ProposedCombinationView ..>  mastermind.utils.Console
+    ProposedCombinationView ..> Message
+    ProposedCombinationView ..> ColorView
+    SecretCombinationView ..> Message
+    SecretCombinationView ..> mastermind.utils.Console
+    AttemptView ..> mastermind.utils.Console
+    AttemptView ..> Message
+    AttemptView ..> ProposedCombinationView
+    ColorView ..> mastermind.utils.Console
+    
+    enum Message{
+        +TITLE
+        +SECRET_CHARACTER
+        +ATTEMPTS
+        +BLACKS_AND_WHITES
+        +WINNER
+        +LOSER
+        +PROPOSE_COMBINATION
+        +INVALID_LENGTH
+        +INVALID_COLORS
+        +REPEATED_COLORS
+        +RESUME_QUESTION
+    }
+    
+    class View {
+        +View()
+        +interact(): void
+    }
+    
+    class GameView{
+        +GameView(Game)
+        +interact(): boolean
+        -proposeCombinations(): void
+        -writeStatus(): void
+        -writeResult(): void
+    }       
+    
+    class ResumeView{
+        +ResumeView(Game)
+        +interact(): void
+        +isResumed(): boolean
+    }
+    
+   
+    class ProposedCombinationView{
+        +read(): void
+        +getProposedCombination(): ProposedCombination
+        +write(): void
+        -isValid(): boolean
+        -isValidLength(): boolean
+        -isValidChars(): boolean
+        -isUniqueChars(): boolean
+    }
+    
+    class SecretCombinationView{
+        +SecretCombinationView(SecretCombination)
+        +write(): void
+    }
+    
+    class AttemptView{
+        +AttemptView(Attempts[])
+        +writeAttemptsNumber()
+        +writeAttempts()
+    }
+    
+    class ColorView{
+        +ColorView(Color)
+        +write(): void
+        +getValidCharacteres(): string
+    }
+}
+
+namespace mastermind.utils{
+
+    YesNoDialog ..> Console
+    
+    class YesNoDialog{
+        +YesNoDialog(String question)
+        +interact(): void
+        +isYesAnswer(): boolean
+    }
+    
+    class Console{
+    }
+
+@enduml

@@ -1,3 +1,7 @@
+# Mastermind "DocumentView"
+![Alt text](diagrams/mastermind-document-view.png?raw=true "Mastermind DocumentView")
+
+
 # Ejercicio Mastermind "DocumentView"
 
 En este ejercicio se debe realizar el juego del Mastermind, cuyos requisitos y modelo de dominio hemos comentado en prácticas anteriores de la secuencia de cursos del Máster de Desarrollo.

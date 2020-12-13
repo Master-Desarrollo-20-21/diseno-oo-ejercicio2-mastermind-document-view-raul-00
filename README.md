@@ -1,5 +1,9 @@
-# Mastermind "DocumentView"
-![Alt text](diagrams/mastermind-document-view.png?raw=true "Mastermind DocumentView")
+## Mastermind "DocumentView": Console + Graphics (Without Factory Method)
+![Alt text](withoutFactoryMethod/diagrams/mastermind-document-view.png?raw=true "Mastermind DocumentView (Without Factory Method)")
+
+
+## Mastermind "DocumentView": Console
+![Alt text](console/diagrams/mastermind-document-view.png?raw=true "Mastermind DocumentView")
 
 
 # Ejercicio Mastermind "DocumentView"
